@@ -10,7 +10,6 @@ def f(x,w,b): # do not change this line!
 def l1loss(x,y,w,b): # do not change this line!
     #forward pass to see current loss
 
-    
     y_hat,two,three = f(x,w,b)
     error = y - y_hat
     l1loss_error =  np.mean(np.abs(error))
@@ -27,7 +26,6 @@ def l1loss(x,y,w,b): # do not change this line!
     # Derivative of updated alpha function w.r.t. y_hat
     # Derivative of y_hat with respect to w
     # Gradients for w and b
-    AA = np.dot(x.T,dalpha)
     dw = -(1 / len(x)) * np.dot(x.T, np.sign(y - y_hat)*dalpha) 
 
     #dw = -np.dot(de , x) / len(x)
@@ -41,21 +39,10 @@ def l1loss(x,y,w,b): # do not change this line!
 
 def minimize_l1loss(x,y,w,b, num_iters=10000, eta=0.0001): # do not change this line!
     iteration_loss = []
-    itteration = 0
     for _ in range(num_iters):
         loss,dl_dw,dl_db = l1loss(x,y,w,b)
         # Update w and b using gradient descent
-   
-        #simple drop out for not learning anymore
-        if(len(iteration_loss) > 0):
-          last_itter_loss = iteration_loss[-1]
-          if (loss >last_itter_loss):
-            print("last call:")
-            print(itteration)
-            return w, b , iteration_loss
         iteration_loss.append(loss)
-        itteration += 1
-        
         w -= eta * dl_dw
         b -= eta * dl_db
     
